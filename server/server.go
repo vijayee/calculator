@@ -7,6 +7,7 @@ import (
 	"github.com/martini-contrib/cors"
 	"net/http"
 	"encoding/json"
+	"github.com/robertkrimen/otto"
 )
 func main() {
 	server:= martini.Classic()
@@ -23,28 +24,36 @@ func main() {
 	server.Run()
 }
 type Calculation struct{
-	calculation string `json:`
+	Calculation string
+	Result float64
 }
 
-func Calculate(response http.ResponseWriter, request *http.Request, params martini.Params) int{
+func Calculate(response http.ResponseWriter, request *http.Request, params martini.Params){
 	bodyBytes, err := ioutil.ReadAll(request.Body)
 	if err != nil {
-		return 500
+		return
 	}
+
 	var toCalc Calculation
 	err = json.Unmarshal(bodyBytes, &toCalc)
 	if err != nil {
-		return 500
+		return
 	}
-	if toCalc.calculation == "" {
-		return 500
+	if toCalc.Calculation == "" {
+		return
 	}
-	fmt.Printf(string(bodyBytes))
+	runner:=otto.New()
+	result, err:= runner.Run(toCalc.Calculation)
+	if err != nil {
+		return
+	}
+	toCalc.Result, _= result.ToFloat()
 	responseBytes, err := json.Marshal(toCalc)
 	if err != nil {
-		return 500
+		return
 	}
+
 	fmt.Fprint(response, string(responseBytes))
-	return 200
+	return
 }
 
