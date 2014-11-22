@@ -37,6 +37,7 @@ func Calculate(response http.ResponseWriter, request *http.Request, params marti
 	var toCalc Calculation
 	err = json.Unmarshal(bodyBytes, &toCalc)
 	if err != nil {
+		http.Error(response, "Failed to Parse JSON", http.StatusInternalServerError)
 		return
 	}
 	if toCalc.Calculation == "" {
@@ -45,11 +46,13 @@ func Calculate(response http.ResponseWriter, request *http.Request, params marti
 	runner:=otto.New()
 	result, err:= runner.Run(toCalc.Calculation)
 	if err != nil {
+		http.Error(response, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	toCalc.Result, _= result.ToFloat()
 	responseBytes, err := json.Marshal(toCalc)
 	if err != nil {
+		http.Error(response, "Failed to Encode JSON", http.StatusInternalServerError)
 		return
 	}
 
