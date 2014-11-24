@@ -11,7 +11,7 @@ import (
 )
 func main() {
 	server:= martini.Classic()
-	server.Use(martini.Static("../assets"))
+	server.Use(martini.Static("../public"))
 	server.Use(cors.Allow(&cors.Options{
 		AllowOrigins:     []string{"http://localhost:*", "http://localhost*"},
 		AllowMethods:     []string{"POST", "GET"},

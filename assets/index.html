@@ -3,8 +3,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>The Calculator App That So Totally Should Get Me Hired</title>
-    <link rel="stylesheet" href="./stylesheets/semantic.css">
-    <script src="javascript/vendor/semantic/semantic.min.js"></script>
+    <link rel="stylesheet" href="./stylesheets/app.css">
+    <script src="javascript/vendor/requirejs/require.js" data-main="javascript/app/main.js" ></script>
 </head>
 <body>
     <div class="ui center aligned page grid">
@@ -15,11 +15,11 @@
                 </header>
             </div>
         </div>
-        <div class="row">
+        <div class="row" ng-controller="CalculatorController as calculator">
             <div class="column">
                 <div class="ui center aligned red inverted segment ">
                     <div class="ui fluid input">
-                        <input type="text" disabled>
+                        <input type="text" ng-model="result" disabled>
                     </div>
                     <div class="ui divider"></div>
                     <div class="two column stackable ui grid">
@@ -27,46 +27,46 @@
                             <div class="ui center aligned grid">
                                 <div class="three column row">
                                     <div class="column">
-                                        <button class="circular ui button">1</button>
+                                        <button class="circular ui button" ng-click="operate(1)">1</button>
                                     </div>
                                     <div class="column">
-                                        <button class="circular ui button">2</button>
+                                        <button class="circular ui button" ng-click="operate(2)">2</button>
                                     </div>
                                     <div class="column">
-                                        <button class="circular ui button">3</button>
-                                    </div>
-                                </div>
-                                <div class="three column row">
-                                    <div class="column">
-                                        <button class="circular ui button">4</button>
-                                    </div>
-                                    <div class="column">
-                                        <button class="circular ui button">5</button>
-                                    </div>
-                                    <div class="column">
-                                        <button class="circular ui button">6</button>
+                                        <button class="circular ui button" ng-click="operate(3)">3</button>
                                     </div>
                                 </div>
                                 <div class="three column row">
                                     <div class="column">
-                                        <button class="circular ui button">7</button>
+                                        <button class="circular ui button" ng-click="operate(4)">4</button>
                                     </div>
                                     <div class="column">
-                                        <button class="circular ui button">8</button>
+                                        <button class="circular ui button" ng-click="operate(5)">5</button>
                                     </div>
                                     <div class="column">
-                                        <button class="circular ui button">9</button>
+                                        <button class="circular ui button" ng-click="operate(6)">6</button>
                                     </div>
                                 </div>
                                 <div class="three column row">
                                     <div class="column">
-                                        <button class="circular ui button">.</button>
+                                        <button class="circular ui button" ng-click="operate(7)">7</button>
                                     </div>
                                     <div class="column">
-                                        <button class="circular ui button">0</button>
+                                        <button class="circular ui button" ng-click="operate(8)">8</button>
                                     </div>
                                     <div class="column">
-                                        <div class="circular ui animated fade button">
+                                        <button class="circular ui button" ng-click="operate(9)">9</button>
+                                    </div>
+                                </div>
+                                <div class="three column row">
+                                    <div class="column">
+                                        <button class="circular ui button" ng-click="operate('.')">.</button>
+                                    </div>
+                                    <div class="column">
+                                        <button class="circular ui button" ng-click="operate(0)">0</button>
+                                    </div>
+                                    <div class="column">
+                                        <div class="circular ui animated fade button" ng-click="operate('-1')">
                                             <div class="hidden content">Negate</div>
                                             <div class="visible content">
                                                 &nbsp;&nbsp;-X&nbsp;&nbsp;
@@ -80,10 +80,10 @@
                             <div class="ui center aligned grid">
                                 <div class="three column row">
                                     <div class="column">
-                                        <button class="circular ui button">&#247;</button>
+                                        <button class="circular ui button" ng-click="operate('/')">&#247;</button>
                                     </div>
                                     <div class="column">
-                                        <div class="circular ui animated fade button">
+                                        <div class="circular ui animated fade button" ng-click="operate('undo')">
                                             <div class="hidden content">Undo</div>
                                             <div class="visible content">
                                                 <i class="undo icon"></i>
@@ -91,7 +91,7 @@
                                         </div>
                                     </div>
                                     <div class="column">
-                                        <div class="circular ui animated fade button">
+                                        <div class="circular ui animated fade button" ng-click="operate('clear')">
                                             <div class="hidden content">Clear</div>
                                             <div class="visible content">
                                                 <i class="trash icon"></i>
@@ -101,21 +101,21 @@
                                 </div>
                                 <div class="three column row">
                                     <div class="column">
-                                        <button class="circular ui button">&#215;</button>
+                                        <button class="circular ui button" ng-click="operate('*')">&#215;</button>
                                     </div>
                                     <div class="column">
-                                        <button class="circular ui button">(</button>
+                                        <button class="circular ui button" ng-click="operate('(')">(</button>
                                     </div>
                                     <div class="column">
-                                        <button class="circular ui button">)</button>
+                                        <button class="circular ui button" ng-click="operate(')')">)</button>
                                     </div>
                                 </div>
                                 <div class="three column row">
                                     <div class="column">
-                                        <button class="circular ui button">-</button>
+                                        <button class="circular ui button" ng-click="operate('-')">-</button>
                                     </div>
                                     <div class="column">
-                                        <div class="circular ui animated fade button">
+                                        <div class="circular ui animated fade button" ng-click="operate('^2')" >
                                             <div class="hidden content">Square</div>
                                             <div class="visible content">
                                                 X^2
@@ -123,7 +123,7 @@
                                         </div>
                                     </div>
                                     <div class="column">
-                                        <div class="circular ui animated fade button">
+                                        <div class="circular ui animated fade button" ng-click="operate('^1/2')">
                                             <div class="hidden content">Root</div>
                                             <div class="visible content">
                                                 &#8730;
@@ -132,7 +132,14 @@
                                     </div>
                                 </div>
                                 <div class="three column row">
-                                        <div class="circular fluid ui button">=</div>
+                                    <div class="column">
+                                        <button class="circular ui button" ng-click="operate('+')">+</button>
+                                    </div>
+                                    <div class="column">
+                                    </div>
+                                    <div class="column">
+                                        <div class="circular fluid ui button" ng-click="operate('=')">=</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
