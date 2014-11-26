@@ -69,6 +69,7 @@ require
       negateOperations=->
         if $scope.operations.length == 0
           return
+
         last=$scope.operations.pop()
         if $.isNumeric(last)
           if last== $scope.result
@@ -80,8 +81,7 @@ require
             $scope.operations.unshift("-(")
             $scope.operations.push(")")
         else
-          if last==")" or last=",2)" or last=",.5)"
-            console.log('happened')
+          if last==")" or last==",2)" or last==",.5)"
             $scope.operations.push(last)
             data=generateExpression()
             openParen = (data.calculation.match(/\(/g) || []).length
@@ -104,7 +104,7 @@ require
             $scope.operations.unshift("Math.pow(")
             $scope.operations.push(",2)")
         else
-          if last==")"
+          if last==")" or last==",2)" or last==",.5)"
             $scope.operations.push(last)
             data=generateExpression()
             openParen = (data.calculation.match(/\(/g) || []).length
@@ -127,7 +127,7 @@ require
             $scope.operations.unshift("Math.pow(")
             $scope.operations.push(",.5)")
         else
-          if last==")"
+          if last==")" or last==",2)" or last==",.5)"
             $scope.operations.push(last)
             data=generateExpression()
             openParen = (data.calculation.match(/\(/g) || []).length
@@ -139,51 +139,6 @@ require
       clear=->
         $scope.operations=[]
         $scope.result= "0"
-      undo=->
-        if $scope.operations.length == 0
-          return
-        remove=$scope.operations.pop()
-        if remove == ")"
-          negative=$scope.operations[$scope.operations.length-2]
-          if negative=="-("
-            $scope.operations.splice($scope.operations.length-2,1)
-          else
-            data=generateExpression()
-            openParen=String(data).lastIndexOf("(")
-            closeParen=String(data).lastIndexOf(")")
-            if (openParen !=-1 or openParen !=0) and (openParen > closeParen)
-              if String(data).charAt(openParen-1)== '-'
-                negative= $scope.operations.lastIndexOf("-(")
-                if negative !=-1
-                  $scope.operations.splice(negative,1)
-          #  else
-          #if $scope.operations[0] == "-("
-          #  $scope.operations.splice(0,1)
-          ###
-          data=generateExpression()
-          openParen=String(data).lastIndexOf("(")
-          closeParen=String(data).lastIndexOf(")")
-          if (openParen !=-1 or openParen !=0) and (openParen > closeParen)
-            if String(data).charAt(openParen-1)== '-'
-              negative= $scope.operations.lastIndexOf("-(")
-              if negative !=-1
-                $scope.operations.splice(negative,1)
-          else
-            console.log('happened')
-            negative= $scope.operations.lastIndexOf("-(")
-            if negative !=-1
-              closeNegagtive =$scope.operations.lastIndexOf(")")
-              if negative > closeNegagtive
-                $scope.operations.splice(negative,1)
-
-          ###
-        last=$scope.operations.pop()
-        if $.isNumeric(last)
-          $scope.operations.push(last)
-          $scope.result=last
-        else
-          requestCalculation()
-          $scope.operations.push(last)
       parenthesize= (operator)->
         if operator == "("
           last=$scope.operations.pop()
@@ -225,7 +180,6 @@ require
             when "-1" then negateOperations()
             when "=" then requestCalculation()
             when "clear" then clear()
-            when "undo" then undo()
             when "(" then parenthesize(operator)
             when ")" then parenthesize(operator)
             when "^2" then squareOperations()

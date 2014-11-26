@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"fmt"
 	"github.com/martini-contrib/cors"
+	"github.com/mytrile/nocache"
 	"net/http"
 	"encoding/json"
 	"github.com/robertkrimen/otto"
@@ -12,8 +13,9 @@ import (
 func main() {
 	server:= martini.Classic()
 	server.Use(martini.Static("../public"))
+	server.Use(nocache.UpdateCacheHeaders())
 	server.Use(cors.Allow(&cors.Options{
-		AllowOrigins:     []string{"http://localhost:*", "http://localhost*"},
+		AllowOrigins:     []string{"http://localhost:*", "http://localhost/*"},
 		AllowMethods:     []string{"POST", "GET"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
