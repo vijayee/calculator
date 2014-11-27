@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>The Calculator App That So Totally Should Get Me Hired</title>
     <link rel="stylesheet" href="./stylesheets/app.css">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <script src="javascript/vendor/requirejs/require.js" data-main="javascript/app/main.js" ></script>
 </head>
 <body>
@@ -18,7 +20,10 @@
         <div class="row" ng-controller="CalculatorController as calculator">
             <div class="column">
                 <div class="ui center aligned red inverted segment ">
-                    <div class="ui fluid input">
+                    <div class="ui fluid input calculator">
+                        <a class="ui corner label" href="https://github.com/vijayee/calculator">
+                            <i class="github icon"></i>
+                        </a>
                         <input type="text" ng-model="result" disabled>
                         <div>{{generateExpression()}}</div>
                     </div>

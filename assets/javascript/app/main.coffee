@@ -184,7 +184,6 @@ require
             when ")" then parenthesize(operator)
             when "^2" then squareOperations()
             when "^1/2" then squareRootOperations()
-        console.log($scope.operations)
     ]
     angular.element(document).ready ->
       angular.bootstrap(document, ['calculatorApp'])

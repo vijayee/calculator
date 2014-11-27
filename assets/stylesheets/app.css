@@ -1,1 +1,17 @@
 @import './vendor/semantic.css';
+@font-face {
+    font-Family: Digital;
+    src: url(../fonts/DS-DIGI.TTF);
+}
+.ui.input.calculator input {
+    font-family: Digital;
+    text-align: right;
+    font-size:  2em;
+    background-color: #F3EDDC;
+}
+.ui.fade.animated.button .hidden.content {
+    font-family: "Helvetica Neue", "Helvetica", Arial;
+}
+body{
+    font-family: "Helvetica Neue", "Helvetica", Arial;
+}
