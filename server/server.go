@@ -16,7 +16,7 @@ func main() {
 	server.Use(martini.Static("../public"))
 	server.Use(nocache.UpdateCacheHeaders())
 	server.Use(cors.Allow(&cors.Options{
-		AllowOrigins:     []string{"http://localhost:*", "http://localhost/*"},
+		AllowOrigins:     []string{"https://localhost:3000"},
 		AllowMethods:     []string{"POST", "GET"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
