@@ -65,7 +65,7 @@ require
             $scope.operations.push(operand)
           else
             $scope.operations.push(last)
-            $scope.operations.push(operand) if last== ")"
+            $scope.operations.push(operand) if last == ")" or  last == ",2)"  or last == ",.5)"
       negateOperations=->
         if $scope.operations.length == 0
           return
@@ -164,7 +164,6 @@ require
               $scope.operations.push(operator)
               requestCalculation()
           else
-            If
             $scope.operations.push(last)
 
       $scope.operate= (operator)->

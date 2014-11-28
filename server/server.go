@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"encoding/json"
 	"github.com/robertkrimen/otto"
+	"log"
 )
 func main() {
 	server:= martini.Classic()
@@ -23,7 +24,8 @@ func main() {
 	}))
 	server.Get("/")
 	server.Post("/calculator", Calculate)
-	server.Run()
+
+	log.Fatal(http.ListenAndServeTLS(":3000", "cert.pem", "key.pem", server))
 }
 type Calculation struct{
 	Calculation string
