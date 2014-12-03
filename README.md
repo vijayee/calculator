@@ -8,6 +8,11 @@ You may start the server from the base directory with:
 cd server
 ./server
 ```
+for windows
+```
+cd server
+server.exe
+```
 The calculator will be served on "https://localhost:3000"
 
 ## Description of Server API
@@ -23,5 +28,6 @@ To build or hack on to code with grunt and go installed:
 npm install --save-dev
 grunt
 cd server
+go get
 go build
 ```
